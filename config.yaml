@@ -1,0 +1,21 @@
+interface: "eth0"       # Network interface to monitor (use 'any' for all)
+log_file: "netsentinel.json"
+
+thresholds:
+  port_scan_ports: 15       # Ports hit from one IP in scan_window seconds = port scan
+  port_scan_window: 10      # Seconds
+  icmp_flood_count: 50      # ICMP packets from one IP in icmp_window seconds
+  icmp_flood_window: 5      # Seconds
+
+whitelist_ips:
+  - "127.0.0.1"
+  - "::1"
+
+dns_monitoring:
+  enabled: true
+  track_changes: true        # Alert when domain resolves to new IP
+  entropy_threshold: 3.5     # Shannon entropy threshold for DNS tunneling detection
+
+alerts:
+  console: true
+  log_file: true
