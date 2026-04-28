@@ -138,6 +138,20 @@ Top Source IPs:
 
 ---
 
+## MITRE ATT&CK Coverage
+
+NetSentinel's detections map to the following MITRE ATT&CK techniques. Every alert in `netsentinel.json` corresponds to behavior an adversary uses for lateral movement, recon, or impact.
+
+| Detection | Tactic | Technique |
+|---|---|---|
+| ARP Spoofing | Credential Access / Collection | [T1557.002 — ARP Cache Poisoning](https://attack.mitre.org/techniques/T1557/002/) |
+| Port Scan | Discovery | [T1046 — Network Service Discovery](https://attack.mitre.org/techniques/T1046/) |
+| ICMP Flood | Impact | [T1499.003 — Application Exhaustion Flood](https://attack.mitre.org/techniques/T1499/003/) |
+| DNS Hijacking | Command and Control | [T1071.004 — Application Layer Protocol: DNS](https://attack.mitre.org/techniques/T1071/004/) |
+| DNS Tunneling (high-entropy subdomains) | Exfiltration / C2 | [T1041 — Exfiltration Over C2 Channel](https://attack.mitre.org/techniques/T1041/), [T1071.004 — DNS](https://attack.mitre.org/techniques/T1071/004/) |
+
+---
+
 ## Roadmap
 
 - [ ] Slack/Discord webhook alerting
