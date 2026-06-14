@@ -1,8 +1,11 @@
 """DNS anomaly detection: hijacking and tunneling."""
+import logging
 import math
 from collections import defaultdict
 from scapy.layers.dns import DNS, DNSRR
 from scapy.layers.inet import IP
+
+logger = logging.getLogger("netsentinel.dns")
 
 
 def shannon_entropy(s):
@@ -73,7 +76,9 @@ class DNSMonitor:
                                 extra={"entropy": round(entropy, 2), "subdomain": subdomain}
                             )
                 except Exception:
-                    pass
+                    # Don't let a single malformed record kill the monitor,
+                    # but surface the error instead of swallowing it silently.
+                    logger.exception("Failed to process DNS A record")
 
             try:
                 rr = rr.payload

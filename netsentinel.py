@@ -8,10 +8,17 @@ Requires root/sudo for packet capture.
 
 import argparse
 import json
+import logging
 import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logger = logging.getLogger("netsentinel")
 
 from config import load_config
 from alerter import Alerter
@@ -146,7 +153,12 @@ Examples:
             try:
                 monitor.process(pkt)
             except Exception:
-                pass
+                # Keep the capture loop alive, but surface the failure
+                # instead of silently swallowing it.
+                logger.exception(
+                    "Monitor %s failed to process packet",
+                    type(monitor).__name__,
+                )
 
     iface = cfg["interface"]
     alerter.info(f"Monitoring interface: {iface}")
